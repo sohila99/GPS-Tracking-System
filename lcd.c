@@ -1,5 +1,4 @@
 #include <stdint.h>
-#include <stdlib.h>
 #include "C:/Users/Sohaila/Downloads/project embedded/tm4c123gh6pm.h"
 void SystemInit(){}
 void delay(int x)
