@@ -71,8 +71,8 @@ GPIO_PORTB_DATA_R &= ~0x48;
 GPIO_PORTC_DATA_R &= ~0xF0;
 GPIO_PORTD_DATA_R &= ~0xC0;
 GPIO_PORTF_DATA_R &= ~0x0E;
-
 }
+
 
 int main()
 {
