@@ -58,6 +58,7 @@ int main(void)
     double latOld; /* the latitude of the previous point that the GPS located */
     double lonOld; /* the longitude of the previous point that the GPS located*/
     double distance; /* distance between the current point and the point before it */
+    double get_distance; /* total distance */
     SW_Init(); /* Initialize the SW switch as GPIO Pin */
 
    /* double slope[]; */
@@ -65,18 +66,19 @@ int main(void)
     
     while (1)
     {
-        if (!(GPIO_PORTF_DATA_REG & (1 << 0)))
+        if (!(GPIO_PORTF_DATA_REG & (1 << 0))) /* if switch is on,  start calculating distance */
         {
             latOld = GPS_lat;
-            lonOld = GPS_lon;
+            lonOld = GPS_lon; /* initialize latOld and lonOld with GPS first coordinates */
+            get_distance = 0; /* reset total distance to 0 */
             while (get_distance <= 100)
             {
                 latNew = GPS_lat; /* reading latitude from GPS */
                 lonNew = GPS_lon; /* reading longitude from GPS */
-                distance = dist(latOld, lonOld, latNew, lonNew); /*  */
-                get_distance = get_distance + distance[i];
+                distance = dist(latOld, lonOld, latNew, lonNew); /* calculate distance between current point and previous one */
+                get_distance = get_distance + distance; /* add the distance to the total distance */
                 lonOld = lonNew;
-                latOld = latNew;
+                latOld = latNew; /* make the current point the previous one for the next iteration of the loop */
             }
         }
     }
