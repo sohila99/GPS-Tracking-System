@@ -37,7 +37,7 @@ void delay(int x)
 			}
 		}
 	}
-void LCD_command(char comm)
+void LCD_command(unsigned char comm)
 {
 GPIO_PORTA_DATA_R=0x00;
 GPIO_PORTB_DATA_R=comm;
@@ -46,7 +46,7 @@ delay(100);
 GPIO_PORTA_DATA_R=0x00;
 }
 
-void LCD_data(char data)
+void LCD_data(unsigned char data)
 {
 GPIO_PORTA_DATA_R=0x10;
 GPIO_PORTB_DATA_R=data;
