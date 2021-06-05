@@ -18,7 +18,7 @@ void Led_Red_Init(void)
 }
 double distance;
 
-void Turn_On(distance)
+void Turn_On(double distance)
 {
 	if (distance>=100)
 	{
@@ -30,7 +30,6 @@ int main(void)
 	while (1)
 		{
 			Led_Red_Init();  
-			Turn_On(200);			
+			Turn_On(90);			
 		}
 }
-
