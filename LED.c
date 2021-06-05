@@ -6,7 +6,7 @@
 void Led_Red_Init(void)
 {
 	SYSCTL_REGCGC2_REG |= 0x00000020;
-        GPIO_PORTF_LOCK_REG = 0x4C4F434B;
+  	GPIO_PORTF_LOCK_REG = 0x4C4F434B;
 	GPIO_PORTF_CR_REG =0x1F;
 	GPIO_PORTF_AFSEL_REG =0;
 	GPIO_PORTF_PCTL_REG =0;
@@ -16,11 +16,11 @@ void Led_Red_Init(void)
 	GPIO_PORTF_DEN_REG =0X1F;
 
 }
-double X;
+double distance;
 
-void Turn_On(X)
+void Turn_On(distance)
 {
-	if (X>=100)
+	if (distance>=100)
 	{
 		GPIO_PORTF_DATA_REG |= (1<<1);
 	}
@@ -33,3 +33,4 @@ int main(void)
 			Turn_On(200);			
 		}
 }
+
