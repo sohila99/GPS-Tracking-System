@@ -50,8 +50,6 @@ int main(void)
     double lon_new; /* the longitude of the current point the GPS locating */
     double lat_old; /* the latitude of the previous point that the GPS located */
     double lon_old; /* the longitude of the previous point that the GPS located*/
-    double GPS_lat;
-    double GPS_lon;
     double distance; /* distance between the current point and the point before it */
     double get_distance; /* total distance */
     wait();
@@ -66,15 +64,12 @@ int main(void)
             get_distance = 0; /* reset total distance to 0 */
             while (get_distance <= 100)
             {
-                scanf_s("%lf", &GPS_lat);
-                scanf_s("%lf", &GPS_lon);
                 lat_new = GPS_lat; /* reading latitude from GPS */
                 lon_new = GPS_lon; /* reading longitude from GPS */
                 distance = dist(lat_old, lon_old, lat_new, lon_new); /* calculate distance between current point and previous one */
                 get_distance = get_distance + distance; /* add the distance to the total distance */
                 lon_old = lon_new;
                 lat_old = lat_new; /* make the current point the previous one for the next iteration of the loop */
-                printf("%lf", get_distance);
                 wait();
             }
             double destination_lat = lat_new;
