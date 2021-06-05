@@ -57,8 +57,6 @@ int main(void)
     {
         if (GPS_lat > 30.063856 && GPS_lat < 30.063940 && GPS_lon > 31.277541 && GPS_lon < 31.277653) /* margin for starting point */
         {
-            scanf_s("%lf", &GPS_lat);
-            scanf_s("%lf", &GPS_lon);
             lat_old = GPS_lat;
             lon_old = GPS_lon; /* initialize latOld and lonOld with GPS first coordinates */
             get_distance = 0; /* reset total distance to 0 */
