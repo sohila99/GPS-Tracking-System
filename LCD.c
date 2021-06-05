@@ -32,10 +32,6 @@ GPIO_PORTA_DATA_R=0x00;
 
 void init(void)
 {
-GPIO_PORTA_DIR_R=0x1B;
-GPIO_PORTA_DEN_R=0x1B;
-GPIO_PORTA_DATA_R=0x1B;
-
 LCD_command (0x01);
 LCD_command (0x0E);
 LCD_command (0x06);
