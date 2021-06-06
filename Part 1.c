@@ -26,7 +26,7 @@ void SystemInit() {}
 #define PF04_mask               0x11
 #define PF_mask                0x20
 
-void delay(int x)
+void delay_ms(int x)
 	{
 		int i;
 		int j;
