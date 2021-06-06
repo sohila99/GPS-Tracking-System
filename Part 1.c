@@ -32,18 +32,35 @@ void delay(int x)
 		int j;
 		for(i=0 ; i<x ; i++)
 		{
-			for(j=0 ; j<x ; j++)
+			for(j=0 ; j<3180 ; j++)
 			{
 			}
 		}
 	}
+
+void delay_us(int x) //delay in microseconds 
+	{
+		int i;
+		int j;
+		for(i=0 ; i<x ; i++)
+		{
+			for(j=0 ; j<3 ; j++)
+			{
+			}
+		}
+	}
+
 void LCD_command(unsigned char comm)
 {
 GPIO_PORTA_DATA_R=0x00;
 GPIO_PORTB_DATA_R=comm;
 GPIO_PORTA_DATA_R|=0x03;
-delay(100);
+delay_us(0);
 GPIO_PORTA_DATA_R=0x00;
+if(comm<4) 
+	delay_ms(2);
+else 
+	delay_us(40);
 }
 
 void LCD_data(unsigned char data)
@@ -51,7 +68,7 @@ void LCD_data(unsigned char data)
 GPIO_PORTA_DATA_R=0x10;
 GPIO_PORTB_DATA_R=data;
 GPIO_PORTA_DATA_R|=0x03;
-delay(100);
+delay_us(0);
 GPIO_PORTA_DATA_R=0x00;
 }
 
@@ -91,12 +108,16 @@ GPIO_PORTA_DIR_R=0x1B;
 GPIO_PORTA_DEN_R=0x1B;
 GPIO_PORTA_DATA_R=0x1B;
 
-LCD_command (0x01);
-LCD_command (0x0E);
-LCD_command (0x06);
-LCD_command (0x80);
 LCD_command (0x38);
+	delay_us(40);
+LCD_command (0x06);
+	delay_us(40);
+LCD_command (0x01);
+	delay_us(40);
 LCD_command (0x0F);
+	delay_us(40);
+LCD_command (0x30);
+	delay_us(40);
 }
 /* Enable PF1 (RED LED) */
 void Led_Red_Init(void)
@@ -127,6 +148,21 @@ int main()
 			RGBLED_Init ();
 			Led_Red_Init(); 
 			Turn_On(200);
-			LCD_data('G');
+			LCD_Init();
+			LCD_command(0x01);
+			LCD_command(0x80);
+			delay_ms(500);
+			LCD_data('T');
+			delay_ms(1);
+			LCD_data('E');
+			delay_ms(1);
+			LCD_data('A');
+			delay_ms(1);
+			LCD_data('M');
+			delay_ms(1);
+			LCD_data('8');
+			delay_ms(1);
+			LCD_data('3');
+		
 		}
 }
