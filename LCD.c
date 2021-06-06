@@ -41,7 +41,7 @@ void LCD_data(unsigned char data)
 GPIO_PORTA_DATA_R=0x10;
 GPIO_PORTB_DATA_R=data;
 GPIO_PORTA_DATA_R|=0x03;
-delay(0);
+delay_us(0);
 GPIO_PORTA_DATA_R=0x00;
 }
 
