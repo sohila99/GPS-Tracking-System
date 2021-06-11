@@ -76,6 +76,6 @@ int main()
     int b = dist_ASCII_b2(250);
     int c = dist_ASCII_b1(250);
     int d = dist_ASCII_b0(250);
-    printf("%c%c%c%c", &a, &b, &c, &d);
+    printf("%c%c%c%c", a, b, c, d);
 }
 
