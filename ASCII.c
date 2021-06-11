@@ -42,6 +42,11 @@ dist_ASCII_b2(double d)
  if ( d < 0 || d >= 10000)
  {
   return 0x4D; // if below 0 or above 3-digits, print "M" of the word "MAX" or "MIN"
+ }
+ elseif ( d >= 0 && d < 10)
+  return 0x30; // if the numbeer is 1-digit, then tens digit = 0
+ elseif (
+ 
    
 }
 
