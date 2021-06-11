@@ -46,6 +46,7 @@ char dist_ASCII_b2(int d)
         a = d % 100; // a = rightmost 2 digits
         b = d % 10; // b = units digit
         a = d - b; // tenth digit
+        a = a / 10;
         a = a + 0x30;
         return a;
     }
@@ -63,6 +64,7 @@ char dist_ASCII_b3(int d)
     {
         b = d % 100; // b = rightmost 2 digits
         a = d - b; // a = 3rd digit
+        a = a / 100;
         a = a + 0x30;
         return a;
     }
