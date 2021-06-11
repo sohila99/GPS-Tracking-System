@@ -45,7 +45,7 @@ char dist_ASCII_b2(int d)
     {
         a = d % 100; // a = rightmost 2 digits
         b = d % 10; // b = units digit
-        a = d - b; // tenth digit
+        a = a - b; // tenth digit
         a = a / 10;
         a = a + 0x30;
         return a;
