@@ -47,8 +47,8 @@ uint8_t GPS_Data(void)
 void Receive_GPS_Data()
 {
   while(end==0){
-    while(1){
-      Gpsdata = Serial.read();
+    while( GPS_Data_Available() == 0){
+      Gpsdata = GPS_Data();
       flag = 1;
      if( Gpsdata=='$' && count == 0)   // finding GPGLL header
        count=1;
@@ -63,22 +63,22 @@ void Receive_GPS_Data()
      if( Gpsdata=='L' && count ==5 )
        count=6;
      if(count==6 &&  Gpsdata ==','){   // count commas in message
-       com_cnt++;
+       comma_count++;
        flag=0;
      }
 
-     if(com_cnt==3 && flg==1){
+     if(comma_count==3 && flag==1){
       lat[lat_cnt++] =  Gpsdata;         // latitude
       flag=0;
      }
 
-     if(com_cnt==5 && flg==1){
+     if(comma_count==5 && flag==1){
        lg[log_cnt++] =  Gpsdata;         // Longitude
        flag=0;
      }
 
-     if( Gpsdata == '*' && com_cnt >= 5){
-       com_cnt = 0;                      // end of GPGLL message
+     if( Gpsdata == '*' && comma_count >= 5){
+       comma_count = 0;                      // end of GPGLL message
        lat_cnt = 0;
        log_cnt = 0;
        flag    = 0;
