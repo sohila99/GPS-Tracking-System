@@ -31,3 +31,39 @@ uint8_t GPS_Receive(void)
 	while (UART1_Available() != 1);
 	return (uint8_t)(UART1_DR_R & 0xFF);
 }
+
+uint8_t C = GPS_Receive(void);
+while (1)
+{
+	C = GPS_Receive(void);
+	if (C == '$')
+	{
+		C = GPS_Receive(void);
+		if (C == 'G')
+		{
+			C = GPS_Receive(void);
+			if (C == 'P')
+			{
+				C = GPS_Receive(void);
+				if (C == 'G')
+				{
+					C = GPS_Receive(void);
+					if (C == 'L')
+					{
+						C = GPS_Receive(void);
+						if (C == 'L')
+						{
+							C = GPS_Receive(void);
+							if (C == ',')
+							{
+								uint8_t lat[];
+
+
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
