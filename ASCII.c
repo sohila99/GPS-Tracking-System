@@ -58,7 +58,7 @@ char dist_ASCII_b3(int d)
     int b;
     if (d >= 1000 || d < 0)
     {
-        return 0x00; // print empty space since "MAX" and "MIN" need only 3 spaces
+        return 0x20; // print empty space since "MAX" and "MIN" need only 3 spaces
     }
     if (d >= 0 && d < 1000)
     {
@@ -72,10 +72,11 @@ char dist_ASCII_b3(int d)
 
 int main()
 {
-    int a = dist_ASCII_b3(250);
-    int b = dist_ASCII_b2(250);
-    int c = dist_ASCII_b1(250);
-    int d = dist_ASCII_b0(250);
+    int distance = 250;
+    int a = dist_ASCII_b3(distance);
+    int b = dist_ASCII_b2(distance);
+    int c = dist_ASCII_b1(distance);
+    int d = dist_ASCII_b0(distance);
     printf("%c%c%c%c", a, b, c, d);
 }
 
