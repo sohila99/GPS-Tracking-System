@@ -135,6 +135,12 @@ int main(void)
 		LCD dist[8] = dist_ASCII_b2(get_distance);
 		LCD dist[9] = dist_ASCII_b1(get_distance);
 		LCD dist[10] = dist_ASCII_b0(get_distance);
+		int i; 
+		for (i=0 ; i<11 ; i++)
+		{
+			LCD_DATA(LCD_dist[i]);
+			LCD_COM(0x11);
+		}
                 lon_old = lon_new;
                 lat_old = lat_new; /* make the current point the previous one for the next iteration of the loop */
                 wait();
