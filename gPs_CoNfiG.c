@@ -1,5 +1,7 @@
 #include "tm4c123gh6pm_registers.h"
-#include "stdint.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 int Gpsdata;             // for incoming serial data
 unsigned int end =0;  // indicate end of message
