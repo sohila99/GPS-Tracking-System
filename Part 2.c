@@ -72,7 +72,7 @@ char GPS_Data(void) // collects data from the Receiver and puts it in a string
 	return (str);
 }
 
-void Receive_GPS_Data(char* str)
+double Receive_GPS_Data(char* str)
 {
 	int end = 1;
 	while(end)
@@ -97,11 +97,14 @@ void Receive_GPS_Data(char* str)
 			y = (Longitude - x*100)/60;
 			Longitude = x+ y;
 			if (strcmp(E_W, "W")==0){
-			Longitude =-1*Longitude;
+			Longitude =-1*Longitude;}
+			double lat_lon = {Latitude, Longitude};
 			end = 0;
 		}
 	}
+	return(lat_lon);
 }
+
 /* function to convert from degree to radian */
 
 double deg2rad(double deg) {
