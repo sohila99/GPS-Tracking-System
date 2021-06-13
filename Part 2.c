@@ -18,31 +18,6 @@ void Receive_GPS_Data();
 
 int main(void)
 {
-	char str[] = GPS_Data();
-	systick();
-	char* ID = strtok(str,",");
- 	char* Current_Lat = strtok(NULL,",");
- 	char* N_S = strtok(NULL,",");
- 	char* Current_Lon = strtok(NULL,",");
- 	char* E_W = strtok(NULL,",");
- 	char* Checksum = strtok(NULL,",");
-
- 	if ( strcmp(ID, "$GPGLL")==0 )
-	{
-		 Latitude = atof(Current_Lat);
-		Longitude = atof(Current_Lon);
-		int x = floor(Latitude/100);
-		double y = (Latitude - x*100)/60;
-		Latitude = x+ y;
-		if (strcmp(N_S, "S")==0){
-		Latitude =-1*Latitude;}
-		y = floor(Longitude/100);
-		y = (Longitude - x*100)/60;
-		Longitude = x+ y;
-		if (strcmp(E_W, "W")==0){
-		Longitude =-1*Longitude;
-	}
-		
     double get_distance;
     double lat_new; /* the latitude of the current point the GPS is locating*/
     double lon_new; /* the longitude of the current point the GPS locating */
@@ -55,8 +30,10 @@ int main(void)
     {
 	char str[] = GPS_Data();
 	systick();
-	Receive_GPS_Data(str);
-        if (GPS_lat > 30.063856 && GPS_lat < 30.063940 && GPS_lon > 31.277541 && GPS_lon < 31.277653) /* margin for starting point */
+	lat_lon[] = Receive_GPS_Data(str);
+	double GPS_lat = lat_lon[0];
+	double GPS_lon = lat_lon[1];
+	if (GPS_lat > 30.063856 && GPS_lat < 30.063940 && GPS_lon > 31.277541 && GPS_lon < 31.277653) /* margin for starting point */
         {
             lat_old = GPS_lat;
             lon_old = GPS_lon; /* initialize latOld and lonOld with GPS first coordinates */
