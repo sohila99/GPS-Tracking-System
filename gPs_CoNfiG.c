@@ -7,14 +7,8 @@
 #include <stdint.h>
 
 int Gpsdata;             // for incoming serial data
-unsigned int end =0;  // indicate end of message
-unsigned int count=0;  // position counter
-unsigned int lat_cnt=0;  // latitude data counter
-unsigned int log_cnt=0;  // longitude data counter
-unsigned int flag    =0;  // GPS flag
-unsigned int comma_count=0;  // comma counter
-char lat[20];            // latitude array
-char lg[20];             // longitude array
+double Longitude;
+double Latitude;
 
 void Receive_GPS_Data();
 
@@ -40,15 +34,22 @@ unsigned char GPS_Data_Available(void)
 	return ((UART1_FR_R & 0x00000010) == 0x00000010) ? 0 : 1;
 }
 
-unsigned char GPS_Data(void)
+char GPS_Data(void)
 {
-	while (GPS_Data_Available() != 1);
-	return (unsigned char)(UART1_DR_R & 0xFF);
-}
+	int i=0;
+	char* data[500];
+	while ( i<=strlen(data) )
+	{
+	  	while (GPS_Data_Available() != 1);
+			data[i] = ( UART1_DR_R & 0xFF ) ;
+			i++;
+	}
+			return (data);
+	}
 
-void Receive_GPS_Data(char str)
+void Receive_GPS_Data(char* str)
 {
-  char* ID = strtok(str,",");
+	char* ID = strtok(str,",");
  char* Current_Lat = strtok(NULL,",");
  char* N_S = strtok(NULL,",");
  char* Current_Lon = strtok(NULL,",");
@@ -64,15 +65,19 @@ void Receive_GPS_Data(char str)
  int x = floor(Latitude/100);
  double y = (Latitude - x*100)/60;
  Latitude = x+ y;
- if (strcmp(N_S, "S")==0)
- Latitude =-1*Latitude;
+ if (strcmp(N_S, "S")==0){
+ Latitude =-1*Latitude;}
  y = floor(Longitude/100);
  y = (Longitude - x*100)/60;
  Longitude = x+ y;
- if (strcmp(E_W, "W")==0)
+ if (strcmp(E_W, "W")==0){
  Longitude =-1*Longitude;
-    
     }
-  }
+	}
 }
+
+int main ()
+{
+	char a [] = GPS_Data();
+	Receive_GPS_Data(a);
 }
