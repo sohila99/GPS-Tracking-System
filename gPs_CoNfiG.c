@@ -1,5 +1,6 @@
 #include "tm4c123gh6pm_registers.h"
 #include "ASCII.c"
+#include "systick.c"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -79,5 +80,6 @@ void Receive_GPS_Data(char* str)
 int main ()
 {
 	char a [] = GPS_Data();
+	systcik();
 	Receive_GPS_Data(a);
 }
