@@ -80,6 +80,16 @@ void Receive_GPS_Data(char str)
 
  Latitude = atof(Current_Lat);
  Longitude = atof(Current_Lon);
+ int x = floor(Latitude/100);
+ double y = (Latitude - x*100)/60;
+ Latitude = x+ y;
+ if (strcmp(N_S, "S")==0)
+ Latitude =-1*Latitude;
+ y = floor(Longitude/100);
+ y = (Longitude - x*100)/60;
+ Longitude = x+ y;
+ if (strcmp(E_W, "W")==0)
+ Longitude =-1*Longitude;
     
     }
   }
