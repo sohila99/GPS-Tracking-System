@@ -1,12 +1,12 @@
-
 #include "tm4c123gh6pm_registers.h"
 #include "ASCII.c"
 #include "systick.c"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include<math.h>
+#include <math.h>
 #include <stdint.h>
+#define PI = 3.141592653589;
 
 int Gpsdata;             // for incoming serial data
 double Longitude;
@@ -85,28 +85,6 @@ void Receive_GPS_Data(char* str)
 		Longitude =-1*Longitude;
 	}
 }
-
-int main ()
-{
-	char str[] = GPS_Data();
-	systick();
-	Receive_GPS_Data(str);
-}
-
-
-
-
-
-
-
-
-#include <stdio.h>
-#include <math.h>
-
-#define PI = 3.141592653589;
-
-using namespace std;
-
 /* function to convert from degree to radian */
 
 double deg2rad(double deg) {
@@ -146,6 +124,29 @@ void wait() {
 
 int main(void)
 {
+	char* ID = strtok(str,",");
+ 	char* Current_Lat = strtok(NULL,",");
+ 	char* N_S = strtok(NULL,",");
+ 	char* Current_Lon = strtok(NULL,",");
+ 	char* E_W = strtok(NULL,",");
+ 	char* Checksum = strtok(NULL,",");
+
+ 	if ( strcmp(ID, "$GPGLL")==0 )
+	{
+		 Latitude = atof(Current_Lat);
+		Longitude = atof(Current_Lon);
+		int x = floor(Latitude/100);
+		double y = (Latitude - x*100)/60;
+		Latitude = x+ y;
+		if (strcmp(N_S, "S")==0){
+		Latitude =-1*Latitude;}
+		y = floor(Longitude/100);
+		y = (Longitude - x*100)/60;
+		Longitude = x+ y;
+		if (strcmp(E_W, "W")==0){
+		Longitude =-1*Longitude;
+	}
+		
     double get_distance;
     double lat_new; /* the latitude of the current point the GPS is locating*/
     double lon_new; /* the longitude of the current point the GPS locating */
@@ -156,6 +157,9 @@ int main(void)
     wait();
     while (1)
     {
+	char str[] = GPS_Data();
+	systick();
+	Receive_GPS_Data(str);
         if (GPS_lat > 30.063856 && GPS_lat < 30.063940 && GPS_lon > 31.277541 && GPS_lon < 31.277653) /* margin for starting point */
         {
             lat_old = GPS_lat;
@@ -178,87 +182,4 @@ int main(void)
     return 0;
 }
 
-
-
-char dist_ASCII_b0(int d)
-{
-    if (d < 0)
-    {
-        return 0x4E; // if below 0, print "N" of the word "MIN"
-    }
-    else if (d >= 0 && d < 1000)
-    {
-        return 0x6D; // if in the correct range, print "m" for meters
-    }
-    else if (d >= 1000)
-    {
-        return 0x58; // if above 3-digits, print "X" of the word "MAX"
-    }
-}
-
-char dist_ASCII_b1(int d)
-{
-    int a;
-    if (d < 0)
-    {
-        return 0x49; // if below 0, print "I" of the word "MIN"
-    }
-    else if(d >= 0 && d < 1000)
-    {
-        a = d % 10; // a = units digit
-        a = a + 0x30;
-        return a;
-    }
-    else if(d >= 1000)
-    {
-        return 0x41; // if above 3-digits, print "A" of the word "MAX"
-    }
-}
-
-char dist_ASCII_b2(int d)
-{
-    int a;
-    int b;
-    if (d >= 1000 || d < 0)
-    {
-        return 0x4D; // if below 0 or above 3-digits, print "M" of the word "MAX" or "MIN"
-    }
-    else if(d >= 0 && d < 1000)
-    {
-        a = d % 100; // a = rightmost 2 digits
-        b = d % 10; // b = units digit
-        a = a - b; // tenth digit
-        a = a / 10;
-        a = a + 0x30;
-        return a;
-    }
-}
-
-char dist_ASCII_b3(int d)
-{
-    int a;
-    int b;
-    if (d >= 1000 || d < 0)
-    {
-        return 0x20; // print empty space since "MAX" and "MIN" need only 3 spaces
-    }
-    if (d >= 0 && d < 1000)
-    {
-        b = d % 100; // b = rightmost 2 digits
-        a = d - b; // a = 3rd digit
-        a = a / 100;
-        a = a + 0x30;
-        return a;
-    }
-}
-
-int main()
-{
-    int distance = 250;
-    int a = dist_ASCII_b3(distance);
-    int b = dist_ASCII_b2(distance);
-    int c = dist_ASCII_b1(distance);
-    int d = dist_ASCII_b0(distance);
-    printf("%c%c%c%c", a, b, c, d);
-}
 
