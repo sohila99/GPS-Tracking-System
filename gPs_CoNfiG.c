@@ -38,14 +38,14 @@ unsigned char GPS_Data_Available(void)
 char GPS_Data(void)
 {
 	int i=0;
-	char* data[500];
-	while ( i<=strlen(data) )
+	char* str[500];
+	while ( i<=strlen(str) )
 	{
 	  	while (GPS_Data_Available() != 1);
-			data[i] = ( UART1_DR_R & 0xFF ) ;
+			str[i] = ( UART1_DR_R & 0xFF ) ;
 			i++;
 	}
-			return (data);
+			return (str);
 	}
 
 void Receive_GPS_Data(char* str)
