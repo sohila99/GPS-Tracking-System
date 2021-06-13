@@ -42,7 +42,7 @@ unsigned char GPS_Data_Available(void)
 
 unsigned char GPS_Data(void)
 {
-	while (UART1_Available() != 1);
+	while (GPS_Data_Available() != 1);
 	return (unsigned char)(UART1_DR_R & 0xFF);
 }
 
