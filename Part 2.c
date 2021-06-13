@@ -45,6 +45,11 @@ int main(void)
                 lon_old = lon_new;
                 lat_old = lat_new; /* make the current point the previous one for the next iteration of the loop */
                 wait();
+		str[] = GPS_Data();
+		systick();
+		lat_lon[] = Receive_GPS_Data(str);
+		GPS_lat = lat_lon[0];
+		GPS_lon = lat_lon[1];
         }
         double destination_lat = lat_new;
         double destination_lon = lon_new;         
