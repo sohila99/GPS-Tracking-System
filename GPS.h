@@ -26,7 +26,7 @@ char GPS_Data(void) // collects data from the Receiver and puts it in a string
 	int i=0; // index of array data
 	int count=0; // counts number of NMEA sentences
 	int end = 1; // ends the loop for all NMEA sentences for one data
-	char* str[3000];
+	char* str[500];
 	while (end) // takes the data of all NMEA sentences for one data
 	{
 		while ( str[i] != 0x0A) // until line return, takes the data for one NMEA sentence
@@ -36,15 +36,13 @@ char GPS_Data(void) // collects data from the Receiver and puts it in a string
 			i++;
 			count++;
 		}
-		char* ID = strtok(str,","); // ID for first NMEA sentence
-		if (count == 1)
-		{
-			char* ID_first = strtok(str,",");
-		}
-		if ( strcmp(ID, ID_first) == 0 && count != 1) // if ID is back to first ID type, it means that
+		char* ID = strtok(str,",");
+		if ( strcmp(ID, "$GPGLL")==0 )
 		{
 			end = 0;
 		}
+		i = 0;
+	}
 	return (str);
 }
 
