@@ -54,8 +54,8 @@ uint8_t char2int(char c)
 
 double lat2int(lat)
 {
-	double deg = char(lat[0]) * 10 + char(lat[1]);
-	double min = char(lat[2]) * 10 + char(lat[3]) + char(lat[5]) * 0.1 + char(lat[6]) * 0.01 + char(lat[7]) * 0.001;
+	double deg = char2int(lat[0]) * 10 + char2int(lat[1]);
+	double min = char2int(lat[2]) * 10 + char2int(lat[3]) + char2int(lat[5]) * 0.1 + char2int(lat[6]) * 0.01 + char2int(lat[7]) * 0.001;
 	deg = deg + min/60;
 	return deg;
 }
