@@ -14,6 +14,89 @@ int Gpsdata;             // for incoming serial data
 double Longitude;
 double Latitude;
 
+void LED(void)    //set leds
+{
+ SYSCTL_RCGCGPIO_R |= 0x20;
+ while ((SYSCTL_PRGPIO_R&0x20)==0){};
+ GPIO_PORTF_LOCK_R = 0x4C4F434B;
+ GPIO_PORTF_CR_R |= 0x02;
+ GPIO_PORTF_DIR_R |= 0x02;
+ GPIO_PORTF_DEN_R |= 0x02;
+ GPIO_PORTF_AMSEL_R =~0x02;
+ GPIO_PORTF_AFSEL_R = ~0x02;
+ GPIO_PORTF_PCTL_R &= ~0x000000F0;
+    GPIO_PORTF_PUR_R |= 0x02;
+
+}
+void led_out(unsigned char data ){
+
+
+            GPIO_PORTF_DATA_R|=data;
+
+void delay_micro(int n);
+void delay_milli(int n);
+void LCD_PORT_INIT();
+void LCD_COM(unsigned char cpm);
+void LCD_DATA(unsigned char data);
+
+void LCD_DATA(unsigned char data)
+{
+    GPIO_PORTA_DATA_R=0x04;
+    GPIO_PORTB_DATA_R=data;
+    GPIO_PORTA_DATA_R|=0x10;
+    delay_micro(0);
+    GPIO_PORTA_DATA_R=0x00;
+}
+
+void LCD_COM(unsigned char com)
+{
+    GPIO_PORTA_DATA_R=0x00;
+    GPIO_PORTB_DATA_R=com;
+    GPIO_PORTA_DATA_R=0x10;
+    delay_micro(0);
+        GPIO_PORTA_DATA_R=0x00;
+    if(com <4) delay_milli(2); else delay_micro(37);
+}
+void LCD_PORT_INIT()
+{
+    SYSCTL_RCGCGPIO_R|=0x03;
+    while((SYSCTL_PRGPIO_R&0X03)==0){}
+    GPIO_PORTB_DIR_R|=0xFF;
+    GPIO_PORTB_DEN_R|=0xFF;
+    GPIO_PORTB_AMSEL_R&= ~0XFF;
+  GPIO_PORTB_AFSEL_R&= ~0XFF;
+  GPIO_PORTB_PCTL_R&=~0xFFFFFFFF;
+    GPIO_PORTA_DIR_R|=0xE0;
+    GPIO_PORTA_DEN_R|=0xE0;
+  GPIO_PORTA_AMSEL_R&= ~0XE0;
+  GPIO_PORTA_AFSEL_R&= ~0XE0;
+    GPIO_PORTA_PCTL_R&=~0xFFF00000;
+       delay_micro(37);
+    LCD_COM(0x38);
+         delay_micro(37);
+  LCD_COM(0x06);
+         delay_micro(37);
+  LCD_COM(0x01);
+         delay_micro(37);
+  LCD_COM(0x0F);
+         delay_micro(37);
+    LCD_COM(0x30);
+         delay_micro(37);
+ }
+
+    void delay_milli(int n){
+int i,j;
+for(i=0;i<n;i++)
+for(j=0;j<3180;j++)
+{}
+}
+void delay_micro(int n){
+int i,j;
+for(i=0;i<n;i++)
+for(j=0;j<3;j++)
+{}
+}
+
 void Receive_GPS_Data();
 
 int main(void)
@@ -25,9 +108,14 @@ int main(void)
     double lon_old; /* the longitude of the previous point that the GPS located*/
     double distance; /* distance between the current point and the point before it */
     double get_distance; /* total distance */
-    wait();
+    delay_milli(50);
+	
     while (1)
     {
+	LCD_PORT_INIT();
+	LCD_COM(1); /* clear display */
+	LCD_COM(0x80); /* lcd cursor location */
+	delay_milli(50);
 	char str[] = GPS_Data();
 	systick();
 	lat_lon[] = Receive_GPS_Data(str);
