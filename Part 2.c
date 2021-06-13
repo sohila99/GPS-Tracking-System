@@ -33,23 +33,21 @@ int main(void)
 	lat_lon[] = Receive_GPS_Data(str);
 	double GPS_lat = lat_lon[0];
 	double GPS_lon = lat_lon[1];
-	if (GPS_lat > 30.063856 && GPS_lat < 30.063940 && GPS_lon > 31.277541 && GPS_lon < 31.277653) /* margin for starting point */
+        lat_old = GPS_lat;
+        lon_old = GPS_lon; /* initialize latOld and lonOld with GPS first coordinates */
+        get_distance = 0; /* reset total distance to 0 */
+        while (get_distance <= 100)
         {
-            lat_old = GPS_lat;
-            lon_old = GPS_lon; /* initialize latOld and lonOld with GPS first coordinates */
-            get_distance = 0; /* reset total distance to 0 */
-            while (get_distance <= 100)
-            {
-                lat_new = GPS_lat; /* reading latitude from GPS */
+		lat_new = GPS_lat; /* reading latitude from GPS */
                 lon_new = GPS_lon; /* reading longitude from GPS */
                 distance = dist(lat_old, lon_old, lat_new, lon_new); /* calculate distance between current point and previous one */
                 get_distance = get_distance + distance; /* add the distance to the total distance */
                 lon_old = lon_new;
                 lat_old = lat_new; /* make the current point the previous one for the next iteration of the loop */
                 wait();
-            }
-            double destination_lat = lat_new;
-            double destination_lon = lon_new;         
+        }
+        double destination_lat = lat_new;
+        double destination_lon = lon_new;         
         }
     }
     return 0;
