@@ -42,6 +42,16 @@ uint8_t GPS_Data(void)
 	return (uint8_t)(UART1_DR_R & 0xFF);
 }
 
+
+uint8_t char2int(c)
+{
+	if (c >= 0x30 && c <= 0x39)
+	{
+		c = c - 0x30;
+	}
+	return c;
+}
+
 void Receive_GPS_Data()
 {
   while(end==0){
