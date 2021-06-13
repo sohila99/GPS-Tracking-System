@@ -60,7 +60,7 @@ double lat2int(lat)
 	return deg;
 }
 
-void Receive_GPS_Data()
+void Receive_GPS_Data(char str)
 {
   while(end==0){
     while( GPS_Data_Available() == 0){
