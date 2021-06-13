@@ -75,7 +75,7 @@ void Receive_GPS_Data()
        flag=0;
      }
 
-     if( Gpsdata == '*' && comma_count >= 5){
+     if( Gpsdata == '*' && comma_count >= 3){
        comma_count = 0;                      // end of GPGLL message
        lat_cnt = 0;
        log_cnt = 0;
