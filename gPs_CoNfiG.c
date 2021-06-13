@@ -36,14 +36,14 @@ uint8_t GPS_Data_Available(void)
 	return ((UART1_FR_R & 0x00000010) == 0x00000010) ? 0 : 1;
 }
 
-uint8_t GPS_Data(void)
+u_int8_t GPS_Data(void)
 {
 	while (UART1_Available() != 1);
 	return (uint8_t)(UART1_DR_R & 0xFF);
 }
 
 
-uint8_t char2int(char c)
+u_int8_t char2int(char c)
 {
 	if (c >= 0x30 && c <= 0x39)
 	{
