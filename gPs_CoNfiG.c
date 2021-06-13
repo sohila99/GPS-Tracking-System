@@ -67,51 +67,20 @@ double lat2int(lat)
 
 void Receive_GPS_Data(char str)
 {
-  while(end==0){
-    while( GPS_Data_Available() == 0){
-      for (int i; i<stlen(str) ; i++){
-      Gpsdata = str[i];
-      flag = 1;
-     if( Gpsdata=='$' && count == 0){   // finding GPGLL header
-       count=1;
-     }
-     if( Gpsdata=='G' && count == 1){
-       count=2;
-     }
-     if( Gpsdata=='P' && count == 2){
-       count=3;
-     }
-     if( Gpsdata=='G' && count == 3){
-       count=4;
-     }
-     if( Gpsdata=='L' && count == 4)
-       count=5;
-    }
-     if( Gpsdata=='L' && count ==5 )
-       count=6;
-  }
-     if(count==6 &&  Gpsdata ==','){   // count commas in message
-       comma_count++;
-       flag=0;
-     }
+  char* ID = strtok(str,",");
+ char* Current_Lat = strtok(NULL,",");
+ char* N_S = strtok(NULL,",");
+ char* Current_Lon = strtok(NULL,",");
+ char* E_W = strtok(NULL,",");
+ char* Checksum = strtok(NULL,",");
 
-     if(comma_count==1 && flag==1){
-      lat[lat_cnt++] =  lat2int(Gpsdata);         // latitude
-      flag=0;
-     }
 
-     if(comma_count==3 && flag==1){
-       lg[log_cnt++] =  lat2int(Gpsdata);         // Longitude
-       flag=0;
-     }
+ if ( strcmp(ID, "$GPGLL")==0 ){
 
-     if( Gpsdata == '*' && comma_count >= 3){
-       comma_count = 0;                      // end of GPGLL message
-       lat_cnt = 0;
-       log_cnt = 0;
-       flag    = 0;
-       end     = 1;
-     }
+
+ Latitude = atof(Current_Lat);
+ Longitude = atof(Current_Lon);
+    
     }
   }
 }
