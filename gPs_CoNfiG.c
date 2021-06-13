@@ -65,12 +65,12 @@ void Receive_GPS_Data()
        flag=0;
      }
 
-     if(comma_count==3 && flag==1){
+     if(comma_count==1 && flag==1){
       lat[lat_cnt++] =  Gpsdata;         // latitude
       flag=0;
      }
 
-     if(comma_count==5 && flag==1){
+     if(comma_count==3 && flag==1){
        lg[log_cnt++] =  Gpsdata;         // Longitude
        flag=0;
      }
