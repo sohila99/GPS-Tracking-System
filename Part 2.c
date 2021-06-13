@@ -74,27 +74,32 @@ char GPS_Data(void) // collects data from the Receiver and puts it in a string
 
 void Receive_GPS_Data(char* str)
 {
-	char* ID = strtok(str,",");
- 	char* Current_Lat = strtok(NULL,",");
- 	char* N_S = strtok(NULL,",");
- 	char* Current_Lon = strtok(NULL,",");
- 	char* E_W = strtok(NULL,",");
- 	char* Checksum = strtok(NULL,",");
-
- 	if ( strcmp(ID, "$GPGLL")==0 )
+	int end = 1;
+	while(end)
 	{
-		 Latitude = atof(Current_Lat);
-		Longitude = atof(Current_Lon);
-		int x = floor(Latitude/100);
-		double y = (Latitude - x*100)/60;
-		Latitude = x+ y;
-		if (strcmp(N_S, "S")==0){
-		Latitude =-1*Latitude;}
-		y = floor(Longitude/100);
-		y = (Longitude - x*100)/60;
-		Longitude = x+ y;
-		if (strcmp(E_W, "W")==0){
-		Longitude =-1*Longitude;
+		char* ID = strtok(str,",");
+	 	char* Current_Lat = strtok(NULL,",");
+	 	char* N_S = strtok(NULL,",");
+	 	char* Current_Lon = strtok(NULL,",");
+ 		char* E_W = strtok(NULL,",");
+ 		char* Checksum = strtok(NULL,",");
+
+ 		if ( strcmp(ID, "$GPGLL")==0 )
+		{
+			Latitude = atof(Current_Lat);
+			Longitude = atof(Current_Lon);
+			int x = floor(Latitude/100);
+			double y = (Latitude - x*100)/60;
+			Latitude = x+ y;
+			if (strcmp(N_S, "S")==0){
+			Latitude =-1*Latitude;}
+			y = floor(Longitude/100);
+			y = (Longitude - x*100)/60;
+			Longitude = x+ y;
+			if (strcmp(E_W, "W")==0){
+			Longitude =-1*Longitude;
+			end = 0;
+		}
 	}
 }
 /* function to convert from degree to radian */
