@@ -14,6 +14,15 @@ double Latitude;
 
 void Receive_GPS_Data();
 
+void systick(void)
+{
+  NVIC_ST_CTRL_R=0; // disable timer
+  NVIC_ST_RELOAD_R = 16000-1; // delay time is 1 ms or 16000-1 counts
+  NVIC_ST_CURRENT_R = 0; // clear current value & flag
+  NVIC_ST_CTRL_R=5; // enable timer
+  while (NVIC_ST_CTRL_R & 0x10000==0) {}
+}
+
 void GPS_Init(void)
 {
 	SYSCTL_RCGCUART_R |= 0x04;
@@ -48,42 +57,39 @@ char GPS_Data(void)
 			i++;
 		}
 	}
-			return (str);
+	return (str);
 }
 
 void Receive_GPS_Data(char* str)
 {
 	char* ID = strtok(str,",");
- char* Current_Lat = strtok(NULL,",");
- char* N_S = strtok(NULL,",");
- char* Current_Lon = strtok(NULL,",");
- char* E_W = strtok(NULL,",");
- char* Checksum = strtok(NULL,",");
+ 	char* Current_Lat = strtok(NULL,",");
+ 	char* N_S = strtok(NULL,",");
+ 	char* Current_Lon = strtok(NULL,",");
+ 	char* E_W = strtok(NULL,",");
+ 	char* Checksum = strtok(NULL,",");
 
-
- if ( strcmp(ID, "$GPGLL")==0 ){
-
-
- Latitude = atof(Current_Lat);
- Longitude = atof(Current_Lon);
- int x = floor(Latitude/100);
- double y = (Latitude - x*100)/60;
- Latitude = x+ y;
- if (strcmp(N_S, "S")==0){
- Latitude =-1*Latitude;}
- y = floor(Longitude/100);
- y = (Longitude - x*100)/60;
- Longitude = x+ y;
- if (strcmp(E_W, "W")==0){
- Longitude =-1*Longitude;
-    }
+ 	if ( strcmp(ID, "$GPGLL")==0 )
+	{
+		 Latitude = atof(Current_Lat);
+		Longitude = atof(Current_Lon);
+		int x = floor(Latitude/100);
+		double y = (Latitude - x*100)/60;
+		Latitude = x+ y;
+		if (strcmp(N_S, "S")==0){
+		Latitude =-1*Latitude;}
+		y = floor(Longitude/100);
+		y = (Longitude - x*100)/60;
+		Longitude = x+ y;
+		if (strcmp(E_W, "W")==0){
+		Longitude =-1*Longitude;
 	}
 }
 
 int main ()
 {
 	char str[] = GPS_Data();
-	systcik();
+	systick();
 	Receive_GPS_Data(str);
 }
 
