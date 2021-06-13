@@ -124,12 +124,17 @@ int main(void)
         lat_old = GPS_lat;
         lon_old = GPS_lon; /* initialize latOld and lonOld with GPS first coordinates */
         get_distance = 0; /* reset total distance to 0 */
-        while (get_distance <= 100)
+	char LCD_dist[11] = "dist = xxxx";
+    	while (get_distance <= 100)
         {
 		lat_new = GPS_lat; /* reading latitude from GPS */
                 lon_new = GPS_lon; /* reading longitude from GPS */
                 distance = dist(lat_old, lon_old, lat_new, lon_new); /* calculate distance between current point and previous one */
                 get_distance = get_distance + distance; /* add the distance to the total distance */
+		LCD dist[7] = dist_ASCII_b3(get_distance);
+		LCD dist[8] = dist_ASCII_b2(get_distance);
+		LCD dist[9] = dist_ASCII_b1(get_distance);
+		LCD dist[10] = dist_ASCII_b0(get_distance);
                 lon_old = lon_new;
                 lat_old = lat_new; /* make the current point the previous one for the next iteration of the loop */
                 wait();
