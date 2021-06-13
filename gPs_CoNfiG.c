@@ -79,7 +79,7 @@ void Receive_GPS_Data(char* str)
 
 int main ()
 {
-	char a [] = GPS_Data();
+	char str[] = GPS_Data();
 	systcik();
-	Receive_GPS_Data(a);
+	Receive_GPS_Data(str);
 }
