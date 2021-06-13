@@ -43,13 +43,21 @@ uint8_t GPS_Data(void)
 }
 
 
-uint8_t char2int(c)
+uint8_t char2int(char c)
 {
 	if (c >= 0x30 && c <= 0x39)
 	{
 		c = c - 0x30;
 	}
 	return c;
+}
+
+double lat2int(lat)
+{
+	double deg = char(lat[0]) * 10 + char(lat[1]);
+	double min = char(lat[2]) * 10 + char(lat[3]) + char(lat[5]) * 0.1 + char(lat[6]) * 0.01 + char(lat[7]) * 0.001;
+	deg = deg + min/60;
+	return deg;
 }
 
 void Receive_GPS_Data()
