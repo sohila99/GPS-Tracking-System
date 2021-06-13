@@ -35,15 +35,15 @@ void GPS_Init(void)
 	GPIO_PORTC_DEN_R |= 0x30;
 }
 
-uint8_t GPS_Data_Available(void)
+unsigned char GPS_Data_Available(void)
 {
 	return ((UART1_FR_R & 0x00000010) == 0x00000010) ? 0 : 1;
 }
 
-u_int8_t GPS_Data(void)
+unsigned char GPS_Data(void)
 {
 	while (UART1_Available() != 1);
-	return (uint8_t)(UART1_DR_R & 0xFF);
+	return (unsigned char)(UART1_DR_R & 0xFF);
 }
 
 void Receive_GPS_Data(char str)
