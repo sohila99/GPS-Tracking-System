@@ -124,6 +124,8 @@ void wait() {
 
 int main(void)
 {
+	char str[] = GPS_Data();
+	systick();
 	char* ID = strtok(str,",");
  	char* Current_Lat = strtok(NULL,",");
  	char* N_S = strtok(NULL,",");
