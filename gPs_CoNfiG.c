@@ -18,7 +18,6 @@ char lg[20];             // longitude array
 
 void Receive_GPS_Data();
 
-
 void GPS_Init(void)
 {
 	SYSCTL_RCGCUART_R |= 0x04;
@@ -45,24 +44,6 @@ u_int8_t GPS_Data(void)
 {
 	while (UART1_Available() != 1);
 	return (uint8_t)(UART1_DR_R & 0xFF);
-}
-
-
-u_int8_t char2int(char c)
-{
-	if (c >= 0x30 && c <= 0x39)
-	{
-		c = c - 0x30;
-	}
-	return c;
-}
-
-double lat2int(lat)
-{
-	double deg = char2int(lat[0]) * 10 + char2int(lat[1]);
-	double min = char2int(lat[2]) * 10 + char2int(lat[3]) + char2int(lat[5]) * 0.1 + char2int(lat[6]) * 0.01 + char2int(lat[7]) * 0.001;
-	deg = deg + min/60;
-	return deg;
 }
 
 void Receive_GPS_Data(char str)
