@@ -42,11 +42,13 @@ char GPS_Data(void)
 	while ( i<=strlen(str) )
 	{
 	  	while (GPS_Data_Available() != 1);
-			str[i] = ( UART1_DR_R & 0xFF ) ;
+		{
+			str[i] = ( UART1_DR_R & 0xFF );
 			i++;
+		}
 	}
 			return (str);
-	}
+}
 
 void Receive_GPS_Data(char* str)
 {
