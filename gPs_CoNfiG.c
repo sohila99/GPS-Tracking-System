@@ -66,18 +66,24 @@ void Receive_GPS_Data()
     while( GPS_Data_Available() == 0){
       Gpsdata = GPS_Data();
       flag = 1;
-     if( Gpsdata=='$' && count == 0)   // finding GPGLL header
+     if( Gpsdata=='$' && count == 0){   // finding GPGLL header
        count=1;
-     if( Gpsdata=='G' && count == 1)
+     }
+     if( Gpsdata=='G' && count == 1){
        count=2;
-     if( Gpsdata=='P' && count == 2)
+     }
+     if( Gpsdata=='P' && count == 2){
        count=3;
-     if( Gpsdata=='G' && count == 3)
+     }
+     if( Gpsdata=='G' && count == 3){
        count=4;
+     }
      if( Gpsdata=='L' && count == 4)
        count=5;
+    }
      if( Gpsdata=='L' && count ==5 )
        count=6;
+  }
      if(count==6 &&  Gpsdata ==','){   // count commas in message
        comma_count++;
        flag=0;
