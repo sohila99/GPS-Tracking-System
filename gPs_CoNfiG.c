@@ -64,7 +64,8 @@ void Receive_GPS_Data()
 {
   while(end==0){
     while( GPS_Data_Available() == 0){
-      Gpsdata = GPS_Data();
+      for (int i; i<stlen(str) ; i++){
+      Gpsdata = str[i];
       flag = 1;
      if( Gpsdata=='$' && count == 0){   // finding GPGLL header
        count=1;
@@ -90,12 +91,12 @@ void Receive_GPS_Data()
      }
 
      if(comma_count==1 && flag==1){
-      lat[lat_cnt++] =  Gpsdata;         // latitude
+      lat[lat_cnt++] =  lat2int(Gpsdata);         // latitude
       flag=0;
      }
 
      if(comma_count==3 && flag==1){
-       lg[log_cnt++] =  Gpsdata;         // Longitude
+       lg[log_cnt++] =  lat2int(Gpsdata);         // Longitude
        flag=0;
      }
 
@@ -105,7 +106,7 @@ void Receive_GPS_Data()
        log_cnt = 0;
        flag    = 0;
        end     = 1;
-
+     }
     }
   }
 }
