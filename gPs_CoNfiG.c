@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include<math.h>
+#include "stdint.h"
 
 int Gpsdata;             // for incoming serial data
 unsigned int end =0;  // indicate end of message
