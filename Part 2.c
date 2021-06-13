@@ -42,21 +42,33 @@ void GPS_Init(void)
 
 unsigned char GPS_Data_Available(void)
 {
-	return ((UART1_FR_R & 0x00000010) == 0x00000010) ? 0 : 1;
+	return ((UART1_FR_R & 0x00000010) == 0x00000010) ? 0 : 1; // check if there is data to read at the Receiver
 }
 
-char GPS_Data(void)
+char GPS_Data(void) // collects data from the Receiver and puts it in a string
 {
 	int i=0;
+	int count=0;
 	char* str[500];
-	while ( i<=strlen(str) )
+	while (?) // takes the data of all NMEA sentences for one data
 	{
-	  	while (GPS_Data_Available() != 1);
+		while ( str[i] != 0x0A) // until line return, takes the data for one NMEA sentence
 		{
+			while (GPS_Data_Available() != 1);
 			str[i] = ( UART1_DR_R & 0xFF );
 			i++;
+			count++;
 		}
-	}
+		char* ID = strtok(str,","); // ID for first NMEA sentence
+		if (count == 1)
+		{
+			char* ID_first = strtok(str,",");
+		}
+		if ( strcmp(ID, ID_first) == 0
+		{
+			
+		}
+	
 	return (str);
 }
 
