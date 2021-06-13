@@ -47,10 +47,11 @@ unsigned char GPS_Data_Available(void)
 
 char GPS_Data(void) // collects data from the Receiver and puts it in a string
 {
-	int i=0;
-	int count=0;
-	char* str[500];
-	while (?) // takes the data of all NMEA sentences for one data
+	int i=0; // index of array data
+	int count=0; // counts number of NMEA sentences
+	int end = 1; // ends the loop for all NMEA sentences for one data
+	char* str[3000];
+	while (end) // takes the data of all NMEA sentences for one data
 	{
 		while ( str[i] != 0x0A) // until line return, takes the data for one NMEA sentence
 		{
@@ -64,11 +65,10 @@ char GPS_Data(void) // collects data from the Receiver and puts it in a string
 		{
 			char* ID_first = strtok(str,",");
 		}
-		if ( strcmp(ID, ID_first) == 0
+		if ( strcmp(ID, ID_first) == 0 && count != 1) // if ID is back to first ID type, it means that
 		{
-			
+			end = 0;
 		}
-	
 	return (str);
 }
 
